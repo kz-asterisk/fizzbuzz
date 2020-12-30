@@ -8,6 +8,7 @@ authors = ["KZ"]
 python = "3.7.3"
 flake8 = "^3.8.4"
 pytest = "^6.2.1"
+mypy = "^0.790"
 
 [tool.poetry.dev-dependencies]
 
