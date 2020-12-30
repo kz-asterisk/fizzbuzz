@@ -1,0 +1,23 @@
+FROM python:3.7.3 AS build
+
+RUN pip install poetry==1.1.4
+
+WORKDIR /app
+COPY . /app/
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-dev --no-interaction --no-ansi
+
+
+RUN make test
+
+RUN make run
+
+FROM gcr.io/distroless/python3-debian10
+
+WORKDIR /app
+COPY --from=build /usr/local/lib/python3.7/site-packages/ /usr/local/lib/python3.7/site-packages/
+COPY fizzbuzz.py /app
+
+RUN python -V
+
+CMD ["fizzbuzz.py"]
